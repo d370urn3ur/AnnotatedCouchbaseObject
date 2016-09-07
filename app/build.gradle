@@ -39,3 +39,7 @@ dependencies {
 
     compile 'com.couchbase.lite:couchbase-lite-android:+'
 }
+
+repositories {
+    mavenCentral()
+}

@@ -1,8 +1,43 @@
 apply plugin: 'java'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+bintray {
+    Properties props = new Properties()
+    props.load(project.rootProject.file('local.properties').newDataInputStream())
+    user = props.getProperty('bintray.user')
+    key = props.getProperty('bintray.apikey')
+    publications = ['MyPublication']
+
+    pkg {
+        repo = 'maven'
+        name = 'annotatedcouchbaseobject'
+        userOrg = 'd370urn3ur'
+        licenses = ['Unlicense']
+        vcsUrl = 'https://github.com/d370urn3ur/AnnotatedCouchbaseObject'
+
+        version {
+            name = '0.1'
+            desc = 'AnnotatedCouchbaseProject version 0.1'
+            released  = new Date()
+        }
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'the.autarch.android'
+            artifactId 'annotatedcouchbaseobject'
+            version '0.1'
+        }
+    }
 }

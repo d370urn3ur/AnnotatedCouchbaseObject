@@ -1,4 +1,6 @@
 apply plugin: 'java'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -9,4 +11,37 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
 
     compile 'com.couchbase.lite:couchbase-lite-android:+'
+}
+
+bintray {
+    Properties props = new Properties()
+    props.load(project.rootProject.file('local.properties').newDataInputStream())
+    user = props.getProperty('bintray.user')
+    key = props.getProperty('bintray.apikey')
+    publications = ['MyPublication']
+
+    pkg {
+        repo = 'maven'
+        name = 'annotatedcouchbaseobject-compiler'
+        userOrg = 'd370urn3ur'
+        licenses = ['Unlicense']
+        vcsUrl = 'https://github.com/d370urn3ur/AnnotatedCouchbaseObject'
+
+        version {
+            name = '0.1'
+            desc = 'AnnotatedCouchbaseProject version 0.1'
+            released  = new Date()
+        }
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'the.autarch.android'
+            artifactId 'annotatedcouchbaseobject-compiler'
+            version '0.1'
+        }
+    }
 }
