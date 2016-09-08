@@ -14,34 +14,33 @@ dependencies {
 }
 
 bintray {
-    Properties props = new Properties()
-    props.load(project.rootProject.file('local.properties').newDataInputStream())
-    user = props.getProperty('bintray.user')
-    key = props.getProperty('bintray.apikey')
-    publications = ['MyPublication']
+
+    user = bintrayUser
+    key = bintrayKey
+    publications = ['AcocPublication']
 
     pkg {
-        repo = 'maven'
+        repo = bintrayRepo
         name = 'annotatedcouchbaseobject-compiler'
-        userOrg = 'd370urn3ur'
-        licenses = ['Unlicense']
-        vcsUrl = 'https://github.com/d370urn3ur/AnnotatedCouchbaseObject'
+        userOrg = bintrayUserOrg
+        licenses = bintrayLicenses
+        vcsUrl = bintrayVcsUrl
 
         version {
-            name = '0.1'
-            desc = 'AnnotatedCouchbaseProject version 0.1'
-            released  = new Date()
+            name = bintrayVersion
+            desc = bintrayDesc
+            released = bintrayReleased
         }
     }
 }
 
 publishing {
     publications {
-        MyPublication(MavenPublication) {
+        AcocPublication(MavenPublication) {
             from components.java
-            groupId 'the.autarch.android'
+            groupId bintrayGroupId
             artifactId 'annotatedcouchbaseobject-compiler'
-            version '0.1'
+            version bintrayVersion
         }
     }
 }

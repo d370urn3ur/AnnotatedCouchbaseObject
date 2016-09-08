@@ -6,10 +6,10 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.3'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // NOTE: 1.7.1 has a bug, can't upload multiple artifacts
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
@@ -21,4 +21,20 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    Properties props = new Properties()
+    props.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    bintrayUser = props.getProperty('bintray.user')
+    bintrayKey = props.getProperty('bintray.apikey')
+    bintrayRepo = 'maven'
+    bintrayUserOrg = 'd370urn3ur'
+    bintrayLicenses = ['Unlicense']
+    bintrayVcsUrl = 'https://github.com/d370urn3ur/AnnotatedCouchbaseObject'
+    bintrayVersion = '0.3'
+    bintrayDesc = 'AnnotatedCouchbaseProject version 0.3'
+    bintrayReleased = new Date()
+    bintrayGroupId = 'the.autarch.android'
 }
